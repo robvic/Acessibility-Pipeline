@@ -6,12 +6,14 @@ wb = oxl.load_workbook(filename)
 sheet = wb['Issues']
 
 # Find columns
-select_columns = ['Page URL', 'Issue Type', 'Checkpoint', 'Issue', 'Xpath']
+select_columns = ['Page URL', 'Issue type', 'Checkpoint', 'Issue', 'Xpath']
+all_column_names = [cell.value for cell in sheet[1]]
 
 # Get values from columns
 selected_names = []
 for row in sheet.iter_rows():
     row_values = []
     for col in select_columns:
-        row_values.append(row[col].value)
+        col_index = all_column_names.index(col)
+        row_values.append(row[col_index].value)
     selected_names.append(row_values)
