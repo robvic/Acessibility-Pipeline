@@ -1,4 +1,7 @@
 import openpyxl as oxl
+from datetime import date
+
+import bq_ingest as bq
 
 # Open sheet
 filename = 'Accessibility_Report-G1 - O portal de notícias da Globo.xlsx'
@@ -17,3 +20,10 @@ for row in sheet.iter_rows():
         col_index = all_column_names.index(col)
         row_values.append(row[col_index].value)
     selected_names.append(row_values)
+    
+day = date.today()
+for row in selected_names:
+    row.append(day)
+
+bq.insert(selected_names[1:])
+print('Done')
